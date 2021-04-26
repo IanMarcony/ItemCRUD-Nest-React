@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  db_postgres_crud:
+    container_name: db_postgres_crud
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: crud_db
+
+    ports:
+      - 5432:5432
+    networks:
+      - postgres-compose-network
+  teste-pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'imarconyls@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: '12345678'
+    ports:
+      - '16543:80'
+    depends_on:
+      - db_postgres_crud
+    networks:
+      - postgres-compose-network
+networks:
+  postgres-compose-network:
+    driver: bridge
